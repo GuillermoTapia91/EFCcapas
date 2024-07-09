@@ -3,6 +3,7 @@ using APICodigoEFC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APICodigoEFC.Migrations
 {
     [DbContext(typeof(CodigoContext))]
-    partial class CodigoContextModelSnapshot : ModelSnapshot
+    [Migration("20240709024742_v5 fields isActive")]
+    partial class v5fieldsisActive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,12 +63,7 @@ namespace APICodigoEFC.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
                     b.HasKey("DetailID");
-
-                    b.HasIndex("ProductID");
 
                     b.ToTable("Details");
                 });
@@ -117,17 +115,6 @@ namespace APICodigoEFC.Migrations
                     b.HasKey("ProductID");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("APICodigoEFC.Models.Detail", b =>
-                {
-                    b.HasOne("APICodigoEFC.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("APICodigoEFC.Models.Invoice", b =>
