@@ -18,9 +18,14 @@ namespace APICodigoEFC.Controllers
         [HttpGet]
         public List<Customer> GetByFilters(string? name,string? documentNumber )
         {
-            var query = _context.Customers.Where(
-                                            x => x.Name.Contains(name.Trim()) ||
-                                            x.DocumentNumber.Contains(documentNumber.Trim()));
+            IQueryable<Customer> query = _context.Customers;
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(x => x.Name.Contains(name));
+
+            if (!string.IsNullOrEmpty(documentNumber))
+                query = query.Where(x => x.DocumentNumber.Contains(documentNumber));
+
             return query.ToList();
         }
 
