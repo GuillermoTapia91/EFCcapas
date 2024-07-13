@@ -7,10 +7,10 @@
 
 
         public int ProductID { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         public int InvoiceID { get; set; }
-        public Invoice Invoice { get; set; }
+        public Invoice? Invoice { get; set; }
 
     }
 }
