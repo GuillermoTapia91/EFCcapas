@@ -24,7 +24,7 @@ namespace APICodigoEFC.Controllers
             if (!string.IsNullOrEmpty(name))
                 query = query.Where(x => x.Name.Contains(name));
 
-            return query.ToList();
+            return query.OrderBy(x=>x.Price) .ToList();
         }
 
         [HttpPost]
