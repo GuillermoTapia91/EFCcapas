@@ -1,4 +1,6 @@
 ﻿using APICodigoEFC.Models;
+using APICodigoEFC.Request;
+using APICodigoEFC.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +43,41 @@ namespace APICodigoEFC.Controllers
         {
             _context.Entry(customer).State = EntityState.Modified;
             _context.SaveChanges();
+        }
+
+        [HttpPut]
+        public ResponseBase UpdateName([FromBody] CustomerUpdateRequest request)
+        {
+            ResponseBase response = new ResponseBase();
+
+            try
+            {                
+
+                var customer = _context.Customers.Find(request.Id);
+                if (customer == null)
+                {
+                    response.Code = -1001;
+                    response.Message = "El cliente no existe";
+                    return response;
+                }
+                customer.Name = request.Name;
+                _context.Entry(customer).State = EntityState.Modified;
+                _context.SaveChanges();
+
+                response.Message = "Actualización Correcta";
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                //Write log
+                response.Message = "Error No Controlado";
+                response.Code = -1000;
+                return response;
+            }
+         
+
         }
 
         [HttpDelete("{id}")]
