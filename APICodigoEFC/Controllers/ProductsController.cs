@@ -1,4 +1,5 @@
 ﻿using APICodigoEFC.Models;
+using APICodigoEFC.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,15 +29,36 @@ namespace APICodigoEFC.Controllers
         }
 
         [HttpPost]
-        public void Insert([FromBody] Product Product)
+        public void Insert([FromBody] ProductInsertRequest request)
         {
-            _context.Products.Add(Product);
+            //Convertir el request => Model (Serializar)
+
+            Product product = new Product
+            {
+                Name = request.Name,
+                Price = request.Price,
+                IsActive = true,
+                CreatedDate = DateTime.Now
+            };
+
+            _context.Products.Add(product);//Un Modelo
             _context.SaveChanges();
         }
         [HttpPut]
         public void Update([FromBody] Product Product)
         {
             _context.Entry(Product).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        [HttpPut]
+        public void UpdatePrice([FromBody] ProductUpdateRequest request)
+        {
+
+            var product = _context.Products.Find(request.Id);
+            product.Price = request.Price;
+            _context.Entry(product).State = EntityState.Modified;         
+           
             _context.SaveChanges();
         }
 
