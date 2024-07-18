@@ -1,7 +1,9 @@
 ﻿using APICodigoEFC.Models;
+using APICodigoEFC.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace APICodigoEFC.Controllers
 {
@@ -50,6 +52,34 @@ namespace APICodigoEFC.Controllers
 
 
             return query.ToList();
+        }
+
+
+        [HttpGet]
+        public List<DetailResponseV1> GetByInvoiceNumber(string? invoiceNumber)
+        {
+
+            IQueryable<Detail> query = _context.Details
+                .Include(x => x.Product)
+                .Include(x => x.Invoice)
+                .Where(x => x.IsActive);
+            if (!string.IsNullOrEmpty(invoiceNumber))
+                query = query.Where(x => x.Invoice.Number.Contains(invoiceNumber));
+
+            //Todos los detalles del modelo
+            var details = query.ToList();
+         
+
+            //Convertir modelo al response
+            var response = details
+                           .Select(x => new DetailResponseV1                            
+                           {            
+                            InvoiceNumber=x.Invoice.Number,
+                            ProductName=x.Product.Name,
+                            SubTotal=x.SubTotal
+                            }).ToList();
+
+            return response;
         }
     }
 }
