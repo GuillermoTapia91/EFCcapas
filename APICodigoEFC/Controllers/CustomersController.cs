@@ -1,6 +1,7 @@
 ﻿using APICodigoEFC.Models;
 using APICodigoEFC.Request;
 using APICodigoEFC.Response;
+using APICodigoEFC.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -57,14 +58,14 @@ namespace APICodigoEFC.Controllers
                 if (customer == null)
                 {
                     response.Code = -1001;
-                    response.Message = "El cliente no existe";
+                    response.Message = Validations.ExistCustomer;
                     return response;
                 }
                 customer.Name = request.Name;
                 _context.Entry(customer).State = EntityState.Modified;
                 _context.SaveChanges();
 
-                response.Message = "Actualización Correcta";
+                response.Message = Validations.CorrectUpdate;
 
                 return response;
 
@@ -72,7 +73,7 @@ namespace APICodigoEFC.Controllers
             catch (Exception ex)
             {
                 //Write log
-                response.Message = "Error No Controlado";
+                response.Message = Validations.GeneralError;
                 response.Code = -1000;
                 return response;
             }
