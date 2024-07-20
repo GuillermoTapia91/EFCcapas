@@ -1,5 +1,6 @@
 ﻿using APICodigoEFC.Models;
 using APICodigoEFC.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace APICodigoEFC.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [Authorize]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -18,6 +20,7 @@ namespace APICodigoEFC.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public List<Product> GetByFilters(string? name)
         {
             IQueryable<Product> query = _context.Products.Where(x => x.IsActive);
@@ -28,7 +31,7 @@ namespace APICodigoEFC.Controllers
             return query.OrderBy(x=>x.Price) .ToList();
         }
 
-        [HttpPost]
+        [HttpPost]       
         public void Insert([FromBody] ProductInsertRequest request)
         {
             //Convertir el request => Model (Serializar)
