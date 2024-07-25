@@ -45,9 +45,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CodigoContext>(
     options =>
     {
-        options.UseSqlServer("Data Source=DESKTOP-BCQFL9J\\SQLEXPRESS;" +
-            "Initial Catalog=CodigoDB;Integrated Security=true;" +
-            "TrustServerCertificate=True");
+        //options.UseSqlServer("Data Source=DESKTOP-BCQFL9J\\SQLEXPRESS;" +
+        //    "Initial Catalog=CodigoDB;User ID=userCodigo;Pwd=123456;" +
+        //    "TrustServerCertificate=True");
+
+        options.UseSqlServer("Server=tcp:codigoserverdatabase.database.windows.net,1433;Initial Catalog=codigoDB;Persist Security Info=False;" +
+            "User ID=usercodigo;Password=Julio2024.;" +
+            "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        
     });
 
 
@@ -56,11 +61,11 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 
