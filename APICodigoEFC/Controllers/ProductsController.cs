@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace APICodigoEFC.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class ProductsController : ControllerBase
     {
