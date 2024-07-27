@@ -1,6 +1,8 @@
-﻿using APICodigoEFC.Models;
+﻿using APICodigoEFC.Context;
+using APICodigoEFC.Models;
 using APICodigoEFC.Request;
 using APICodigoEFC.Response;
+using APICodigoEFC.Services;
 using APICodigoEFC.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,15 +24,11 @@ namespace APICodigoEFC.Controllers
         [HttpGet]
         public List<Customer> GetByFilters(string? name,string? documentNumber )
         {
-            IQueryable<Customer> query = _context.Customers.Where(x=>x.IsActive);
+            var services = new CustomersService(_context);
+            var customers = services.GetByFilters(name, documentNumber);
 
-            if (!string.IsNullOrEmpty(name))
-                query = query.Where(x => x.Name.Contains(name));
-
-            if (!string.IsNullOrEmpty(documentNumber))
-                query = query.Where(x => x.DocumentNumber.Contains(documentNumber));
-
-            return query.ToList();
+            return customers;
+           
         }
 
         [HttpPost]

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APICodigoEFC.Models;
+using APICodigoEFC.Context;
 
 namespace APICodigoEFC.Controllers
 {
