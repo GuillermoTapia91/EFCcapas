@@ -1,5 +1,5 @@
-using APICodigoEFC.Context;
-using APICodigoEFC.Models;
+using Infraestructure.Context;
+using Domain.Models;
 using APICodigoEFC.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

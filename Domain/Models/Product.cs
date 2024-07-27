@@ -1,6 +1,6 @@
-﻿using NuGet.Protocol.Core.Types;
+﻿
 
-namespace APICodigoEFC.Models
+namespace Domain.Models
 {
     public class Product
     {
